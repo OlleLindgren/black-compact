@@ -28,6 +28,7 @@ from typing import (
 )
 
 import click
+import compactify
 from click.core import ParameterSource
 from mypy_extensions import mypyc_attr
 from pathspec import PathSpec
@@ -1125,7 +1126,11 @@ def _format_str_once(src_contents: str, *, mode: Mode) -> str:
         if "\n" in normalized_content:
             return newline
         return ""
-    return "".join(dst_contents)
+
+    formatted_src = "".join(dst_contents)
+    formatted_src = compactify.format_code(formatted_src)
+
+    return formatted_src
 
 
 def decode_bytes(src: bytes) -> Tuple[FileContent, Encoding, NewLine]:

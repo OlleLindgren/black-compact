@@ -64,6 +64,7 @@ classifiers = [
 ]
 dependencies = [
   "click>=8.0.0",
+  "compactify>=2",
   "mypy_extensions>=0.4.3",
   "packaging>=22.0",
   "pathspec>=0.9.0",
