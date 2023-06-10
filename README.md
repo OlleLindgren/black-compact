@@ -1,5 +1,52 @@
 [![Black Logo](https://raw.githubusercontent.com/psf/black/main/docs/_static/logo2-readme.png)](https://black.readthedocs.io/en/stable/)
 
+<h2 align="center">The regular Black formatter, but less verbose</h2>
+
+The regular _Black_ formatter is great. But there's one thing it doesn't handle nicely, namely parantheses. For example, it might create something like this:
+
+```python
+comparison_operators = MappingProxyType(
+    {
+        ast.Eq: operator.eq,
+        ast.NotEq: operator.ne,
+        ast.Lt: operator.lt,
+        ast.LtE: operator.le,
+        ast.Gt: operator.gt,
+        ast.GtE: operator.ge,
+    }
+)
+```
+
+In my opinion, this is ugly and overly verbose, and if we decide to have a normal dict instead, the indent changes:
+
+```python
+comparison_operators = {
+    ast.Eq: operator.eq,
+    ast.NotEq: operator.ne,
+    ast.Lt: operator.lt,
+    ast.LtE: operator.le,
+    ast.Gt: operator.gt,
+    ast.GtE: operator.ge,
+}
+```
+
+The solution is simple, just have this formatting instead. This gives smaller diffs, and looks much nicer. It is simply better:
+
+```python
+comparison_operators = MappingProxyType({
+    ast.Eq: operator.eq,
+    ast.NotEq: operator.ne,
+    ast.Lt: operator.lt,
+    ast.LtE: operator.le,
+    ast.Gt: operator.gt,
+    ast.GtE: operator.ge,
+})
+```
+
+This is implemented by adding an additional final formatting step that runs [compactify](https://pypi.org/project/compactify/) on the formatted output of black, and that's it. Everything else remains exactly the same as with the regular _Black_ formatter.
+
+Below you'll find the regular README.md from the regular _Black_ repo.
+
 <h2 align="center">The Uncompromising Code Formatter</h2>
 
 <p align="center">
